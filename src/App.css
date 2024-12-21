@@ -1,0 +1,20 @@
+.bg-home {
+  background: #ccc;
+}
+
+.bg-container {
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    #e0f7fa -48.6deg,
+    #dff0d8 99.34deg,
+    #fff9c4 163.8deg,
+    #e0f7fa 311.4deg,
+    #dff0d8 459.34deg
+  );
+}
+.btn-buy {
+  background: linear-gradient(90deg, #17573c 24.63%, #4ac486 100%) !important;
+}
+.bg-login {
+  background: linear-gradient(112.55deg, #17573c 2.74%, #4ac486 101.1%);
+}
