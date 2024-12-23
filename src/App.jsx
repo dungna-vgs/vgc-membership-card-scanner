@@ -1,24 +1,31 @@
 import "./App.css";
-import HomePage from "./components/HomePage";
-import { Routes, Route } from "react-router-dom";
-import LoginBox from "./components/Login";
-import ParentComponent from "./components/ParentComponent";
-import FormAction from "./components/Form";
-import BarcodeScanner from "./components/QrScan";
+import { Suspense, useEffect } from "react";
+import Loading from "./components/loading";
+import Spinner from "./components/Spinner";
+import RenderRouter from "./router";
+import { apiGetUser } from "./api";
+import useLoading from "./hooks/useLoading";
 
 function App() {
+  const { setLoading } = useLoading();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      setLoading(true);
+      await apiGetUser();
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, [setLoading]);
+
   return (
-    <>
-      <div className="min-h-[100vh] bg-container flex justify-center items-center bg-cover">
-        <Routes>
-          <Route path="/" element={<LoginBox />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/step-form" element={<ParentComponent />} />
-          <Route path="/form" element={<FormAction />} />
-          <Route path="/qr" element={<BarcodeScanner />} />
-        </Routes>
+    <Suspense fallback={<Loading />}>
+      <div className="min-h-screen bg-container flex justify-center items-center bg-cover">
+        <Spinner />
+        <RenderRouter />
       </div>
-    </>
+    </Suspense>
   );
 }
 

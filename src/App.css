@@ -13,7 +13,11 @@
   );
 }
 .btn-buy {
-  background: linear-gradient(90deg, #17573c 24.63%, #4ac486 100%) !important;
+  background: linear-gradient(90deg, #17573c 24.63%, #4ac486 100%);
+  @apply flex justify-center items-center gap-1 h-12 rounded-lg w-48 disabled:!bg-[#868686] disabled:!bg-none;
+}
+.btn-buy span {
+  @apply uppercase font-semibold text-base text-white;
 }
 .bg-login {
   background: linear-gradient(112.55deg, #17573c 2.74%, #4ac486 101.1%);

@@ -1,7 +1,7 @@
-import LogoHeader from "../assets/images/logo-header.svg";
+import LogoHeader from "@/assets/images/logo-header.svg";
 const Header = () => {
   return (
-    <div className="bg-white h-[84px] fixed top-0 right-0 left-0 flex justify-center items-center">
+    <div className="bg-white h-[84px] fixed top-0 right-0 left-0 flex justify-center items-center z-10">
       <a href="#">
         <img src={LogoHeader} alt="Logo" className="w-[76px] h-[53px]" />
       </a>
