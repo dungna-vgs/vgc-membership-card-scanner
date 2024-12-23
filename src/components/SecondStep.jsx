@@ -1,4 +1,4 @@
-import { useRef, useEffect, memo, useCallback } from "react";
+import { useRef, useEffect, memo, useCallback, useState } from "react";
 import { Html5Qrcode } from "html5-qrcode";
 import useScanning from "@/hooks/useScanning";
 import useLoading from "@/hooks/useLoading";
@@ -10,6 +10,7 @@ const SecondStep = () => {
   const scannerRef = useRef(null);
   const { setLoading } = useLoading();
   const { setStep, setCardInfo } = useScanning();
+  const [error, setError] = useState("");
 
   const handleResult = useCallback(
     async (decodedText) => {
@@ -21,10 +22,11 @@ const SecondStep = () => {
       if (response.status === HTTP_STATUS_CODE.OK) {
         const { error_code, data, message } = response.data;
         if (error_code === HTTP_STATUS_CODE.OK) {
+          setError("");
           setCardInfo(data);
           setStep(3);
         } else {
-          alert(message);
+          setError(message);
           scannerRef?.current?.resume();
         }
       }
@@ -44,7 +46,6 @@ const SecondStep = () => {
           {
             fps: 10,
             qrbox: { width: 250, height: 250 },
-            aspectRatio: 1,
           },
           (decodedText) => {
             console.log("QR Code detected:", decodedText);
@@ -73,23 +74,25 @@ const SecondStep = () => {
           .catch((err) => console.error("Error stopping scanner:", err));
       }
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="h-full w-full flex justify-center items-center relative z-0">
+    <div className="h-full w-full flex justify-center items-center relative z-0 flex-col">
       <div
         id="qr-code-container"
         ref={qrCodeRef}
         className="w-72 h-72 bg-black"
       />
       <div className="absolute inset-0 bg-black/50 -z-[1]" />
-      <button
-        onClick={() => setStep(1)}
-        className="btn-buy absolute bottom-12 left-1/2 -translate-x-1/2"
-      >
-        <span>Hủy</span>
-      </button>
+      <div className="flex flex-col justify-center items-center gap-4 absolute bottom-12">
+        {error && (
+          <p className="text-yellow-300 text-sm text-center">{error}</p>
+        )}
+        <button onClick={() => setStep(1)} className="btn-buy">
+          <span>Hủy</span>
+        </button>
+      </div>
     </div>
   );
 };
