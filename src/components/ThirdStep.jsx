@@ -102,16 +102,16 @@ const ThirdStep = () => {
               />
             </div>
             <div className="w-[345px] h-12 flex justify-between gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-              <span className="text-[#ccc] pl-3">Mã OTP:</span>
+              <span className="text-[#ccc] block pl-3">Mã OTP:</span>
               <input
                 type="text"
                 name="otp"
                 required
-                className="flex-1 outline-none"
+                className="flex-1 outline-none pr-3"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
               />
-              <button onClick={handleResendOtp} className="text-green-500 pr-3">
+              <button onClick={handleResendOtp} className="text-green-500 p-2">
                 Gửi lại
               </button>
             </div>

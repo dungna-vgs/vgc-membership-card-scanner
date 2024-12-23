@@ -45,7 +45,7 @@ export default function LoginBox() {
   return authenticated ? (
     <Navigate to={ROUTE_PATH.HOME} />
   ) : (
-    <div className="relative bg-login flex justify-center items-center bg-cover bg-no-repeat w-[434px] h-[100vh]">
+    <div className="relative bg-login flex justify-center items-center bg-cover bg-no-repeat max-h-screen w-full h-screen">
       <div className="w-[320px] lg:w-[360px] z-50 bg-[#73DAAF] h-[525px] rounded-[30px] bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-95">
         <div className="flex flex-col gap-4 justify-center items-center my-auto w-full h-full py-8">
           <img src={logo} alt="LOGO VGCorp" />
@@ -109,14 +109,14 @@ export default function LoginBox() {
           </div>
         </div>
       </div>
-      <div className="absolute top-[60%] left-0">
-        <img src={SvgGolf1} alt="Golf Icon" className="opacity-20" />
+      <div className="absolute bottom-[15px] left-0">
+        <img src={SvgGolf1} alt="Golf Icon" className="opacity-20 w-[107px] h-[204px]" />
       </div>
-      <div className="absolute top-[15%] right-0">
-        <img src={SvgGolf2} alt="Golf Icon" className="opacity-25" />
+      <div className="absolute top-[32px] right-0">
+        <img src={SvgGolf2} alt="Golf Icon" className="opacity-25 w-[156] h-[325px]" />
       </div>
-      <div className="absolute top-[80%] right-0">
-        <img src={SvgGolf3} alt="Golf Icon" className="opacity-40" />
+      <div className="absolute bottom-0 right-0">
+        <img src={SvgGolf3}  alt="Golf Icon" className="opacity-40 w-[102px] h-[168px]" />
       </div>
     </div>
   );
