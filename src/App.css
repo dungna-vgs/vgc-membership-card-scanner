@@ -29,5 +29,5 @@
   background: linear-gradient(112.55deg, #17573c 2.74%, #4ac486 101.1%);
 }
 #qr-shaded-region {
-  @apply !border-0;
+  @apply !border-0 !aspect-square;
 }

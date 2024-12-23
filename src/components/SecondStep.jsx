@@ -25,7 +25,7 @@ const SecondStep = () => {
           setStep(3);
         } else {
           alert(message);
-          scannerRef?.current.resume();
+          scannerRef?.current?.resume();
         }
       }
       setLoading(false);
