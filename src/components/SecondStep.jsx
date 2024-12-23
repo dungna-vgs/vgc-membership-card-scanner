@@ -7,6 +7,7 @@ import { HTTP_STATUS_CODE } from "@/constants";
 
 const SecondStep = () => {
   const qrCodeRef = useRef(null);
+  const scannerRef = useRef(null);
   const { setLoading } = useLoading();
   const { setStep, setCardInfo } = useScanning();
 
@@ -24,6 +25,7 @@ const SecondStep = () => {
           setStep(3);
         } else {
           alert(message);
+          scannerRef?.current.resume();
         }
       }
       setLoading(false);
@@ -33,6 +35,7 @@ const SecondStep = () => {
 
   useEffect(() => {
     const scanner = new Html5Qrcode("qr-code-container");
+    scannerRef.current = scanner;
 
     const startScanning = async () => {
       try {
@@ -41,14 +44,15 @@ const SecondStep = () => {
           {
             fps: 10,
             qrbox: { width: 250, height: 250 },
+            aspectRatio: 1,
           },
           (decodedText) => {
             console.log("QR Code detected:", decodedText);
             handleResult(decodedText);
             if (scanner.isScanning) {
               scanner
-                .stop()
-                .catch((err) => console.error("Error stopping scanner:", err));
+                .pause()
+                .catch((err) => console.error("Error pausing scanner:", err));
             }
           },
           (errorMessage) => {
@@ -69,7 +73,8 @@ const SecondStep = () => {
           .catch((err) => console.error("Error stopping scanner:", err));
       }
     };
-  }, [handleResult]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="h-full w-full flex justify-center items-center relative z-0">

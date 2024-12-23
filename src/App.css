@@ -19,6 +19,15 @@
 .btn-buy span {
   @apply uppercase font-semibold text-base text-white;
 }
+.btn-back {
+  @apply flex justify-center items-center gap-1 h-12 rounded-lg w-48 bg-white border border-[#16533D];
+}
+.btn-back span {
+  @apply uppercase font-semibold text-base text-[#17573c];
+}
 .bg-login {
   background: linear-gradient(112.55deg, #17573c 2.74%, #4ac486 101.1%);
+}
+#qr-shaded-region {
+  @apply !border-0;
 }

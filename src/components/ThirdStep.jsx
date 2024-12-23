@@ -2,7 +2,7 @@ import { apiCheckin, apiGetTicket, apiSendOTP, apiVerifyOTP } from "@/api";
 import { HTTP_STATUS_CODE } from "@/constants";
 import useLoading from "@/hooks/useLoading";
 import useScanning from "@/hooks/useScanning";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 const ThirdStep = () => {
@@ -117,14 +117,23 @@ const ThirdStep = () => {
             </div>
             <span className='text-xs'>Mã OTP đã được gửi về ứng dụng vHandicap của khách hàng</span>
 
-            <button
-              onClick={handleVerifyOtp}
-              className="btn-buy"
-              disabled={loading || !otp}
-            >
-              <span>Xác nhận</span>
-              <ArrowRight className="w-[13px] h-[12px] text-white" />
-            </button>
+            <div className='flex gap-6'>
+              <button
+                onClick={() => setStep(2)}
+                className="btn-back"
+              >
+                <ArrowLeft className="w-[13px] h-[12px] text-[#17573C]" />
+                <span>Quay lại</span>
+              </button>
+              <button
+                onClick={handleVerifyOtp}
+                className="btn-buy"
+                disabled={loading || !otp}
+              >
+                <span>Xác nhận</span>
+                <ArrowRight className="w-[13px] h-[12px] text-white" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
