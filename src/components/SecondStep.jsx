@@ -12,7 +12,7 @@ const SecondStep = () => {
 
   const handleResult = useCallback(
     async (decodedText) => {
-      if (!/\d+9/.test(decodedText)) {
+      if (!/\d{9}/.test(decodedText)) {
         return alert("Mã QR không hợp lệ. Vui lòng thử lại!");
       }
       setLoading(true);
