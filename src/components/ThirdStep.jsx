@@ -1,14 +1,17 @@
 import { apiCheckin, apiGetTicket, apiSendOTP, apiVerifyOTP } from "@/api";
 import { HTTP_STATUS_CODE } from "@/constants";
+import useErrorModal from '@/hooks/useErrorModal';
 import useLoading from "@/hooks/useLoading";
 import useScanning from "@/hooks/useScanning";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useState } from "react";
 
 const ThirdStep = () => {
-  const [otp, setOtp] = useState("");
   const { cardInfo, setStep } = useScanning();
   const { loading, setLoading } = useLoading();
+  const { openModal } = useErrorModal();
+  const [otp, setOtp] = useState("");
+
   if (!cardInfo) return null;
 
   const { id, card_number, user } = cardInfo;
@@ -19,7 +22,7 @@ const ThirdStep = () => {
     if (response.status === HTTP_STATUS_CODE.OK) {
       const { error_code, message } = response.data;
       if (!error_code === HTTP_STATUS_CODE.OK) {
-        alert(message);
+        openModal(message);
       }
     }
     setOtp("");
@@ -53,7 +56,7 @@ const ThirdStep = () => {
 
         await handleCheckin(payload);
       } else {
-        alert(message);
+        openModal(message);
       }
     }
     setLoading(false);
@@ -68,7 +71,7 @@ const ThirdStep = () => {
       if (error_code === HTTP_STATUS_CODE.FULFILLED) {
         setStep(4);
       } else {
-        alert(message);
+        openModal(message);
       }
     }
   };
@@ -76,7 +79,7 @@ const ThirdStep = () => {
   return (
     <div>
       <div className="bg-transparent">
-        <div className="h-[100vh] mt-[84px] w-full flex justify-center items-center bg-cover bg-no-repeat">
+        <div className="h-screen mt-20 w-full flex justify-center items-center bg-cover bg-no-repeat">
           <div className="flex flex-col p-8 gap-4 justify-center items-center my-auto w-full h-full py-8">
             <span className="text-[18px] font-semibold text-center px-8 uppercase">
               Thông tin khách hàng
@@ -102,7 +105,7 @@ const ThirdStep = () => {
               />
             </div>
             <div className="w-[345px] h-12 flex justify-start gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-            <span className="text-[#ccc] pl-3">Mã OTP:</span>
+            <span className="text-[#ccc] pl-3 whitespace-nowrap">Mã OTP:</span>
               <input
                 type="text"
                 name="otp"
@@ -111,7 +114,7 @@ const ThirdStep = () => {
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
               />
-              <button onClick={handleResendOtp} className="text-green-500 p-2">
+              <button onClick={handleResendOtp} className="text-green-500 p-2 whitespace-nowrap">
                 Gửi lại
               </button>
             </div>

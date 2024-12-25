@@ -11,32 +11,35 @@ import { COOKIE_KEYS, HTTP_STATUS_CODE, ROUTE_PATH } from "@/constants";
 import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
 import useAuthenticated from "@/hooks/useAuthenticated";
+import useErrorModal from "@/hooks/useErrorModal";
 
-export default function LoginBox() {
+export default function LoginPage() {
+  const { authenticated, setAuthenticated } = useAuthenticated();
+  const { openModal } = useErrorModal();
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const { loading, setLoading } = useLoading();
-  const { authenticated, setAuthenticated } = useAuthenticated();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError("");
 
     try {
       const response = await apiLogin({ email: name, password });
       if (response.status === HTTP_STATUS_CODE.OK) {
-        const { error_code, access_token } = response.data;
+        const { error_code, message, access_token } = response.data;
         if (!error_code) {
           Cookies.set(COOKIE_KEYS.ACCESS_TOKEN, access_token);
           setAuthenticated(true);
+        } else {
+          openModal(message);
         }
+      } else {
+        openModal("Đăng nhập thất bại");
       }
-      setError("Đăng nhập thất bại");
     } catch (err) {
-      setError(err?.message || "Có lỗi xảy ra, vui lòng thử lại");
+      openModal(err?.message || "Có lỗi xảy ra, vui lòng thử lại");
     } finally {
       setLoading(false);
     }
@@ -60,7 +63,7 @@ export default function LoginBox() {
               <span className="block mb-2">Tên đăng nhập</span>
               <input
                 type="email"
-                className="block w-72 py-2.5 text-sm rounded-md bg-white border-0 border-b-2 focus:outline-none px-2"
+                className="block w-72 py-2.5 text-base rounded-md bg-white border-0 border-b-2 focus:outline-none px-2"
                 placeholder="Nhập tên đăng nhập"
                 required
                 value={name}
@@ -71,7 +74,7 @@ export default function LoginBox() {
               <span className="block mb-2">Mật khẩu</span>
               <input
                 type={show ? "text" : "password"}
-                className="block w-72 py-2.5 text-sm rounded-md bg-white border-0 border-b-2 focus:outline-none px-2 pr-4"
+                className="block w-72 py-2.5 text-base rounded-md bg-white border-0 border-b-2 focus:outline-none px-2 pr-4"
                 placeholder="Nhập mật khẩu"
                 required
                 value={password}
@@ -89,8 +92,6 @@ export default function LoginBox() {
                 />
               )}
             </div>
-
-            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
 
             <button
               className="flex justify-center disabled:opacity-50 items-center mt-4 w-72 bg-gradient-to-r from-[#17573C] to-[#4AC486] hover:opacity-85 duration-150 uppercase text-[16px] py-3 rounded-lg text-white px-10"
@@ -110,13 +111,25 @@ export default function LoginBox() {
         </div>
       </div>
       <div className="absolute bottom-[15px] left-0">
-        <img src={SvgGolf1} alt="Golf Icon" className="opacity-20 w-[107px] h-[204px]" />
+        <img
+          src={SvgGolf1}
+          alt="Golf Icon"
+          className="opacity-20 w-[107px] h-[204px]"
+        />
       </div>
       <div className="absolute top-[32px] right-0">
-        <img src={SvgGolf2} alt="Golf Icon" className="opacity-25 w-[156] h-[325px]" />
+        <img
+          src={SvgGolf2}
+          alt="Golf Icon"
+          className="opacity-25 w-[156] h-[325px]"
+        />
       </div>
       <div className="absolute bottom-0 right-0">
-        <img src={SvgGolf3}  alt="Golf Icon" className="opacity-40 w-[102px] h-[168px]" />
+        <img
+          src={SvgGolf3}
+          alt="Golf Icon"
+          className="opacity-40 w-[102px] h-[168px]"
+        />
       </div>
     </div>
   );

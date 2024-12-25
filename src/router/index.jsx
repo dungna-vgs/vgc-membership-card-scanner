@@ -2,14 +2,14 @@ import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import PrivateRoute from "./privateRoute";
 import { ROUTE_PATH } from "@/constants";
-import LoginBox from "@/components/Login";
+import LoginPage from "@/components/LoginPage";
 
 const HomePage = lazy(() => import("@/components/HomePage"));
 
 const routeList = [
   {
     path: ROUTE_PATH.LOGIN,
-    element: <PrivateRoute element={<LoginBox />} />,
+    element: <PrivateRoute element={<LoginPage />} />,
   },
   {
     path: ROUTE_PATH.HOME,
