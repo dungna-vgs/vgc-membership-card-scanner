@@ -82,7 +82,7 @@ const ThirdStep = () => {
               Thông tin khách hàng
             </span>
             <div className="w-[345px] h-12 flex justify-start gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-              <span className="text-[#ccc] pl-3">Chủ thẻ:</span>
+            <span className="text-[#ccc] pl-3">Chủ thẻ:</span>
               <input
                 type="text"
                 name=""
@@ -92,7 +92,7 @@ const ThirdStep = () => {
               />
             </div>
             <div className="w-[345px] h-12 flex justify-start gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-              <span className="text-[#ccc] pl-3">Mã thẻ:</span>
+            <span className="text-[#ccc] pl-3">Mã thẻ:</span>
               <input
                 type="text"
                 name=""
@@ -101,13 +101,13 @@ const ThirdStep = () => {
                 readOnly
               />
             </div>
-            <div className="w-[345px] h-12 flex justify-between gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-              <span className="text-[#ccc] block pl-3">Mã OTP:</span>
+            <div className="w-[345px] h-12 flex justify-start gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
+            <span className="text-[#ccc] pl-3">Mã OTP:</span>
               <input
                 type="text"
                 name="otp"
                 required
-                className="flex-1 outline-none pr-3"
+                className="w-full outline-none pr-3"
                 value={otp}
                 onChange={(e) => setOtp(e.target.value)}
               />

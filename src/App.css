@@ -14,13 +14,13 @@
 }
 .btn-buy {
   background: linear-gradient(90deg, #17573c 24.63%, #4ac486 100%);
-  @apply flex justify-center items-center gap-1 h-12 rounded-lg w-48 disabled:!bg-[#868686] disabled:!bg-none;
+  @apply flex justify-center items-center gap-1 h-12 rounded-lg w-40 disabled:!bg-[#868686] disabled:!bg-none;
 }
 .btn-buy span {
   @apply uppercase font-semibold text-base text-white;
 }
 .btn-back {
-  @apply flex justify-center items-center gap-1 h-12 rounded-lg w-48 bg-white border border-[#16533D];
+  @apply flex justify-center items-center gap-1 h-12 rounded-lg w-40 bg-white border border-[#16533D];
 }
 .btn-back span {
   @apply uppercase font-semibold text-base text-[#17573c];
@@ -30,4 +30,31 @@
 }
 #qr-shaded-region {
   @apply !border-0 !aspect-square;
+}
+.ant-modal-title {
+  display: flex;
+  justify-items: center !important;
+}
+.btn-logout {
+  background: transparent;
+  width: 46px;
+  height: 46px;
+  border-radius: 100%;
+}
+.ant-modal-content {
+  height: 224px;
+  flex-direction: column;
+  display: flex;
+  gap: 8px;
+}
+.ant-modal-title {
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+}
+.ant-modal{
+  display: flex;
+  justify-content: center;
 }

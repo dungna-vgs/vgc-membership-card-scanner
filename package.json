@@ -10,7 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.2",
     "@zxing/library": "^0.21.3",
+    "antd": "^5.22.6",
     "axios": "^1.7.9",
     "html5-qrcode": "^2.3.8",
     "js-cookie": "^3.0.5",
