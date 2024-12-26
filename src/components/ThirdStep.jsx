@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { apiCheckin, apiGetTicket, apiSendOTP, apiVerifyOTP } from "@/api";
 import { HTTP_STATUS_CODE } from "@/constants";
-import useErrorModal from '@/hooks/useErrorModal';
+import useErrorModal from "@/hooks/useErrorModal";
 import useLoading from "@/hooks/useLoading";
 import useScanning from "@/hooks/useScanning";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { isResponseOk } from "@/utils/common";
+import ArrowIcon from '@/assets/icons/arrow-ic.svg?react';
 
 const ThirdStep = () => {
   const { cardInfo, setStep } = useScanning();
@@ -19,7 +20,7 @@ const ThirdStep = () => {
   const handleResendOtp = async () => {
     setLoading(true);
     const response = await apiSendOTP({ card_number });
-    if (response.status === HTTP_STATUS_CODE.OK) {
+    if (isResponseOk(response)) {
       const { error_code, message } = response.data;
       if (!error_code === HTTP_STATUS_CODE.OK) {
         openModal(message);
@@ -33,7 +34,7 @@ const ThirdStep = () => {
     setLoading(true);
     const response = await apiVerifyOTP({ card_number, otp });
 
-    if (response.status === HTTP_STATUS_CODE.OK) {
+    if (isResponseOk(response)) {
       const { error_code, message } = response.data;
 
       if (error_code === HTTP_STATUS_CODE.OK) {
@@ -46,7 +47,7 @@ const ThirdStep = () => {
           card_id: id,
         });
 
-        if (ticketResponse.status === HTTP_STATUS_CODE.OK) {
+        if (isResponseOk(ticketResponse)) {
           const data = ticketResponse.data?.data?.data;
 
           if (Array.isArray(data) && data.length > 0) {
@@ -65,7 +66,7 @@ const ThirdStep = () => {
   const handleCheckin = async (payload) => {
     const response = await apiCheckin(payload);
 
-    if (response.status === HTTP_STATUS_CODE.OK) {
+    if (isResponseOk(response)) {
       const { error_code, message } = response.data;
 
       if (error_code === HTTP_STATUS_CODE.FULFILLED) {
@@ -77,67 +78,69 @@ const ThirdStep = () => {
   };
 
   return (
-    <div>
-      <div className="bg-transparent">
-        <div className="h-screen mt-20 w-full flex justify-center items-center bg-cover bg-no-repeat">
-          <div className="flex flex-col p-8 gap-4 justify-center items-center my-auto w-full h-full py-8">
-            <span className="text-[18px] font-semibold text-center px-8 uppercase">
-              Thông tin khách hàng
-            </span>
-            <div className="w-[345px] h-12 flex justify-start gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-            <span className="text-[#ccc] pl-3">Chủ thẻ:</span>
-              <input
-                type="text"
-                name=""
-                className="outline-none flex-1 pr-3"
-                value={user ? `${user.fullname} - VGA${user.id_display}` : null}
-                readOnly
-              />
-            </div>
-            <div className="w-[345px] h-12 flex justify-start gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-            <span className="text-[#ccc] pl-3">Mã thẻ:</span>
-              <input
-                type="text"
-                name=""
-                className="outline-none flex-1 pr-3"
-                value={card_number}
-                readOnly
-              />
-            </div>
-            <div className="w-[345px] h-12 flex justify-start gap-2 items-center bg-white border border-[#ccc] shadow-md rounded-md">
-            <span className="text-[#ccc] pl-3 whitespace-nowrap">Mã OTP:</span>
-              <input
-                type="text"
-                name="otp"
-                required
-                className="w-full outline-none pr-3"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-              />
-              <button onClick={handleResendOtp} className="text-green-500 p-2 whitespace-nowrap">
-                Gửi lại
-              </button>
-            </div>
-            <span className='text-xs'>Mã OTP đã được gửi về ứng dụng vHandicap của khách hàng</span>
-
-            <div className='flex gap-6'>
-              <button
-                onClick={() => setStep(2)}
-                className="btn-back"
-              >
-                <ArrowLeft className="w-[13px] h-[12px] text-[#17573C]" />
-                <span>Quay lại</span>
-              </button>
-              <button
-                onClick={handleVerifyOtp}
-                className="btn-buy"
-                disabled={loading || !otp}
-              >
-                <span>Xác nhận</span>
-                <ArrowRight className="w-[13px] h-[12px] text-white" />
-              </button>
-            </div>
+    <div className="bg-transparent min-h-dvh h-full w-full flex justify-center items-center bg-cover bg-no-repeat">
+      <div className="flex flex-col gap-10 justify-center items-center my-auto max-w-[370px] w-full mx-6">
+        <div className="flex flex-col gap-4">
+          <span className="text-xl font-semibold text-center uppercase">
+            Thông tin khách hàng
+          </span>
+          <div className="w-full h-12 flex justify-start gap-2 items-center bg-white border-[0.5px] border-[#CECECE] rounded-[7px]">
+            <span className="text-[#979797] pl-3 text-sm">Chủ thẻ:</span>
+            <input
+              type="text"
+              name=""
+              className="outline-none flex-1 pr-3"
+              value={user ? `${user.fullname} - VGA${user.id_display}` : null}
+              readOnly
+            />
           </div>
+          <div className="w-full h-12 flex justify-start gap-2 items-center bg-white border-[0.5px] border-[#CECECE] rounded-[7px]">
+            <span className="text-[#979797] pl-3 text-sm">Mã thẻ:</span>
+            <input
+              type="text"
+              name=""
+              className="outline-none flex-1 pr-3"
+              value={card_number}
+              readOnly
+            />
+          </div>
+          <div className="w-full h-12 flex justify-start gap-2 items-center bg-white border-[0.5px] border-[#CECECE] rounded-[7px]">
+            <span className="text-[#979797] pl-3 text-sm whitespace-nowrap">
+              Mã OTP:
+            </span>
+            <input
+              type="text"
+              name="otp"
+              required
+              className="w-full outline-none pr-3"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+            <button
+              onClick={handleResendOtp}
+              className="text-[#4AC486] text-sm mr-3 whitespace-nowrap"
+            >
+              Gửi lại
+            </button>
+          </div>
+          <span className="text-sm">
+            Mã OTP đã được gửi về ứng dụng vHandicap của khách hàng
+          </span>
+        </div>
+
+        <div className="flex gap-6">
+          <button onClick={() => setStep(2)} className="btn-back">
+            <ArrowIcon />
+            <span>Quay lại</span>
+          </button>
+          <button
+            onClick={handleVerifyOtp}
+            className="btn-buy"
+            disabled={loading || !otp}
+          >
+            <span>Xác nhận</span>
+            <ArrowIcon />
+          </button>
         </div>
       </div>
     </div>

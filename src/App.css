@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+body {
+  font-family: "Montserrat", serif;
+}
+
 .bg-home {
   background: #ccc;
 }
@@ -14,16 +20,22 @@
 }
 .btn-buy {
   background: linear-gradient(90deg, #17573c 24.63%, #4ac486 100%);
-  @apply flex justify-center items-center gap-1 h-12 rounded-2xl w-40 disabled:!bg-[#868686] disabled:!bg-none;
+  @apply flex justify-center items-center gap-2 h-12 rounded-2xl w-40 disabled:!bg-[#868686] disabled:!bg-none;
 }
 .btn-buy span {
   @apply uppercase font-semibold text-sm text-white;
 }
 .btn-back {
-  @apply flex justify-center items-center gap-1 h-12 rounded-2xl w-40 bg-white border-2 border-[#0F0F0F];
+  @apply flex justify-center items-center gap-2 h-12 rounded-2xl w-40 bg-white border-2 border-[#0F0F0F];
 }
 .btn-back span {
   @apply uppercase font-semibold text-sm text-[#0F0F0F];
+}
+.btn-back svg {
+  @apply rotate-180;
+}
+.btn-back svg path {
+  @apply fill-[#0F0F0F];
 }
 .bg-login {
   background: linear-gradient(112.55deg, #17573c 2.74%, #4ac486 101.1%);
@@ -54,7 +66,7 @@
   align-items: center;
   font-weight: 700;
 }
-.ant-modal{
+.ant-modal {
   display: flex;
   justify-content: center;
 }

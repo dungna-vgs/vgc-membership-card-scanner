@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { COOKIE_KEYS, API_URL, HTTP_STATUS_CODE } from "@/constants";
-import useAuthenticated from "@/hooks/useAuthenticated";
+import logoutUser from '@/utils/logoutUser';
 
 const axiosInstance = axios.create({
   timeout: 300000,
@@ -34,8 +34,7 @@ axiosInstance.interceptors.response.use(
     const errorMessage = error?.message;
 
     if (status === HTTP_STATUS_CODE.UNAUTHORIZED) {
-      Cookies.remove(COOKIE_KEYS.ACCESS_TOKEN);
-      await useAuthenticated.getState().setAuthenticated(false);
+      logoutUser();
     }
 
     return {

@@ -5,6 +5,7 @@ import useLoading from "@/hooks/useLoading";
 import { apiSendOTP } from "@/api";
 import { HTTP_STATUS_CODE } from "@/constants";
 import useErrorModal from "@/hooks/useErrorModal";
+import { isResponseOk } from '@/utils/common';
 
 const SecondStep = () => {
   const qrCodeRef = useRef(null);
@@ -20,7 +21,7 @@ const SecondStep = () => {
       }
       setLoading(true);
       const response = await apiSendOTP({ card_number: decodedText });
-      if (response.status === HTTP_STATUS_CODE.OK) {
+      if (isResponseOk(response)) {
         const { error_code, data, message } = response.data;
         if (error_code === HTTP_STATUS_CODE.OK) {
           setCardInfo(data);
@@ -83,7 +84,7 @@ const SecondStep = () => {
   }, []);
 
   return (
-    <div className="h-full w-full flex pt-40 items-center relative z-0 flex-col">
+    <div className="min-h-dvh h-full w-full flex pt-40 items-center relative z-0 flex-col">
       <div
         id="qr-code-container"
         ref={qrCodeRef}
@@ -91,7 +92,7 @@ const SecondStep = () => {
       />
       <div className="absolute inset-0 bg-black/40 -z-[1]" />
       <div className="flex flex-col justify-center items-center gap-4 mt-28">
-        <button onClick={() => setStep(1)} className="btn-buy">
+        <button onClick={() => setStep(1)} className="btn-buy mb-6">
           <span>Hủy</span>
         </button>
       </div>
